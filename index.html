@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto MoneTag Ads</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- Adextra Ads Script -->
+    <script type="text/javascript">
+        var adextra = adextra || {};
+        adextra.cmd = adextra.cmd || [];
+        (function() {
+            var adextraScript = document.createElement('script');
+            adextraScript.async = true;
+            adextraScript.type = 'text/javascript';
+            adextraScript.src = 'https://cdn.adextra.com/js/adextra.v2.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(adextraScript, node);
+        })();
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .developer {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        /* Adextra Ads Styles */
+        .adextra-ad {
+            margin: 10px 0;
+            text-align: center;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        
+        .adextra-banner {
+            height: 90px;
+            margin: 15px 0;
+        }
+        
+        .adextra-interstitial {
+            height: 250px;
+            margin: 20px 0;
+        }
+        
+        .adextra-native {
+            height: 120px;
+            margin: 15px 0;
+        }
+        
+        .user-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .welcome {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .progress-section {
+            padding: 25px 20px;
+            text-align: center;
+            background: #fff;
+        }
+        
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            border-radius: 10px;
+            width: 10%;
+            transition: width 0.5s ease;
+        }
+        
+        .percentage {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin: 10px 0;
+        }
+        
+        .buttons {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-watch {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .btn-watch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-auto {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+        
+        .btn-stop {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .auto-timer {
+            text-align: center;
+            padding: 10px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            margin: 10px 20px;
+            display: none;
+        }
+        
+        .timer-text {
+            font-size: 14px;
+            color: #856404;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 12px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Auto MoneTag Ads</h1>
+            <div class="developer">Developer by Md Shajahan Abir</div>
+            <!-- Adextra Banner Ad -->
+            <div id="adextra-banner" class="adextra-ad adextra-banner">
+                <script type="text/javascript">
+                    adextra.cmd.push(function() {
+                        adextra.showAd('adextra-banner', {
+                            zoneId: 'YOUR_BANNER_ZONE_ID'
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+        
+        <div class="user-info">
+            <div class="welcome" id="welcomeText">Welcome, Loading...</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="watchedAds">1</div>
+                    <div class="stat-label">Watched Ads</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="earnedPoints">0.50</div>
+                    <div class="stat-label">Earned Points</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auto-timer" id="autoTimer">
+            <div class="timer-text">Next Auto Ad in: <span id="countdown">20</span>s</div>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-text">Progress to Next Reward</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="percentage" id="percentage">10%</div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-watch" id="watchBtn">Watch Ad</button>
+            
+            <!-- Adextra Interstitial Ad -->
+            <div id="adextra-interstitial" class="adextra-ad adextra-interstitial">
+                <script type="text/javascript">
+                    adextra.cmd.push(function() {
+                        adextra.showAd('adextra-interstitial', {
+                            zoneId: 'YOUR_INTERSTITIAL_ZONE_ID'
+                        });
+                    });
+                </script>
+            </div>
+            
+            <button class="btn btn-auto" id="autoBtn">Auto Show Ads</button>
+            <button class="btn btn-stop" id="stopBtn">Stop Auto Ads</button>
+        </div>
+        
+        <div class="footer">
+            <!-- Adextra Native Ad -->
+            <div id="adextra-native" class="adextra-ad adextra-native">
+                <script type="text/javascript">
+                    adextra.cmd.push(function() {
+                        adextra.showAd('adextra-native', {
+                            zoneId: 'YOUR_NATIVE_ZONE_ID'
+                        });
+                    });
+                </script>
+            </div>
+            <p>Auto ads every 20 seconds. Click responsibly.</p>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        +0.50 Points Added! 🎉
+    </div>
+
+    <script>
+        // Telegram Web App Integration
+        let tg = window.Telegram.WebApp;
+        
+        // User data
+        let userData = {
+            watchedAds: 1,
+            earnedPoints: 0.50,
+            progress: 10,
+            isAutoMode: false,
+            autoInterval: null,
+            countdownInterval: null,
+            countdownTime: 20
+        };
+        
+        // DOM Elements
+        const welcomeText = document.getElementById('welcomeText');
+        const watchedAdsEl = document.getElementById('watchedAds');
+        const earnedPointsEl = document.getElementById('earnedPoints');
+        const progressFill = document.getElementById('progressFill');
+        const percentageEl = document.getElementById('percentage');
+        const watchBtn = document.getElementById('watchBtn');
+        const autoBtn = document.getElementById('autoBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const notification = document.getElementById('notification');
+        const autoTimer = document.getElementById('autoTimer');
+        const countdownEl = document.getElementById('countdown');
+        
+        // Initialize
+        function init() {
+            tg.expand();
+            tg.ready();
+            
+            // Set user info from Telegram
+            const user = tg.initDataUnsafe?.user;
+            if (user) {
+                const username = user.username ? `@${user.username}` : 'User';
+                welcomeText.textContent = `Welcome, ${username}`;
+            } else {
+                welcomeText.textContent = 'Welcome, @exampleUser';
+            }
+            
+            updateDisplay();
+            loadAdextraAds();
+        }
+        
+        // Load Adextra Ads
+        function loadAdextraAds() {
+            // Ads automatically load via the script
+            console.log('Adextra Ads loaded');
+        }
+        
+        // Update display with current data
+        function updateDisplay() {
+            watchedAdsEl.textContent = userData.watchedAds;
+            earnedPointsEl.textContent = userData.earnedPoints.toFixed(2);
+            progressFill.style.width = `${userData.progress}%`;
+            percentageEl.textContent = `${userData.progress}%`;
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Update countdown timer
+        function updateCountdown() {
+            countdownEl.textContent = userData.countdownTime;
+        }
+        
+        // Watch ad manually
+        function watchAd() {
+            userData.watchedAds++;
+            userData.earnedPoints += 0.50;
+            userData.progress += 10;
+            
+            if (userData.progress > 100) {
+                userData.progress = 0;
+                showNotification('🎉 Bonus Reward Unlocked! +5 Points');
+                userData.earnedPoints += 5;
+            } else {
+                showNotification('+0.50 Points Added! 🎉');
+            }
+            
+            updateDisplay();
+            
+            // Simulate ad watching delay
+            watchBtn.disabled = true;
+            setTimeout(() => {
+                watchBtn.disabled = false;
+            }, 2000);
+            
+            // Refresh Adextra ads after watching ad
+            refreshAdextraAds();
+        }
+        
+        // Refresh Adextra Ads
+        function refreshAdextraAds() {
+            adextra.cmd.push(function() {
+                adextra.refreshAds();
+            });
+        }
+        
+        // Start auto ads with 20 seconds interval
+        function startAutoAds() {
+            if (userData.isAutoMode) return;
+            
+            userData.isAutoMode = true;
+            autoTimer.style.display = 'block';
+            userData.countdownTime = 20;
+            updateCountdown();
+            showNotification('Auto Ads Started ⚡ (20s interval)');
+            
+            // Countdown timer
+            userData.countdownInterval = setInterval(() => {
+                userData.countdownTime--;
+                updateCountdown();
+                
+                if (userData.countdownTime <= 0) {
+                    userData.countdownTime = 20;
+                    updateCountdown();
+                    watchAd(); // Auto click ad
+                }
+            }, 1000);
+        }
+        
+        // Stop auto ads
+        function stopAutoAds() {
+            if (!userData.isAutoMode) return;
+            
+            userData.isAutoMode = false;
+            clearInterval(userData.autoInterval);
+            clearInterval(userData.countdownInterval);
+            autoTimer.style.display = 'none';
+            showNotification('Auto Ads Stopped 🛑');
+        }
+        
+        // Event listeners
+        watchBtn.addEventListener('click', watchAd);
+        autoBtn.addEventListener('click', startAutoAds);
+        stopBtn.addEventListener('click', stopAutoAds);
+        
+        // Initialize the app
+        init();
+        
+        // Send data to Telegram bot when needed
+        function sendDataToBot() {
+            const data = {
+                watched_ads: userData.watchedAds,
+                earned_points: userData.earnedPoints
+            };
+            tg.sendData(JSON.stringify(data));
+        }
+    </script>
+</body>
+  </html>
